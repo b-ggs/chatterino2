@@ -32,9 +32,6 @@
 [submodule "lib/googletest"]
 	path = lib/googletest
 	url = https://github.com/google/googletest.git
-[submodule "lib/miniaudio"]
-	path = lib/miniaudio
-	url = https://github.com/mackron/miniaudio.git
 [submodule "lib/lua/src"]
 	path = lib/lua/src
 	url = https://github.com/lua/lua

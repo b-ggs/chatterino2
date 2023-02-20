@@ -5,7 +5,6 @@
 #include "common/Outcome.hpp"
 #include "common/QLogging.hpp"
 #include "controllers/notifications/NotificationModel.hpp"
-#include "controllers/sound/SoundController.hpp"
 #include "messages/Message.hpp"
 #include "providers/twitch/api/Helix.hpp"
 #include "providers/twitch/TwitchIrcServer.hpp"
@@ -22,6 +21,7 @@
 
 #include <QDesktopServices>
 #include <QDir>
+#include <QMediaPlayer>
 #include <QUrl>
 
 #include <unordered_set>
@@ -97,13 +97,25 @@ void NotificationController::removeChannelNotification(
 }
 void NotificationController::playSound()
 {
+    static auto player = new QMediaPlayer;
+    static QUrl currentPlayerUrl;
+
     QUrl highlightSoundUrl =
         getSettings()->notificationCustomSound
             ? QUrl::fromLocalFile(
                   getSettings()->notificationPathSound.getValue())
             : QUrl("qrc:/sounds/ping2.wav");
 
-    getApp()->sound->play(highlightSoundUrl);
+    // Set media if the highlight sound url has changed, or if media is buffered
+    if (currentPlayerUrl != highlightSoundUrl ||
+        player->mediaStatus() == QMediaPlayer::BufferedMedia)
+    {
+        player->setMedia(highlightSoundUrl);
+
+        currentPlayerUrl = highlightSoundUrl;
+    }
+
+    player->play();
 }
 
 NotificationModel *NotificationController::createModel(QObject *parent,

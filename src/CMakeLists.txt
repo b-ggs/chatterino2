@@ -170,9 +170,6 @@ set(SOURCE_FILES
         controllers/plugins/LuaUtilities.cpp
         controllers/plugins/LuaUtilities.hpp
 
-        controllers/sound/SoundController.cpp
-        controllers/sound/SoundController.hpp
-
         controllers/twitch/LiveController.cpp
         controllers/twitch/LiveController.hpp
 
@@ -674,6 +671,7 @@ target_link_libraries(${LIBRARY_PROJECT}
         Qt${MAJOR_QT_VERSION}::Widgets
         Qt${MAJOR_QT_VERSION}::Gui
         Qt${MAJOR_QT_VERSION}::Network
+        Qt${MAJOR_QT_VERSION}::Multimedia
         Qt${MAJOR_QT_VERSION}::Svg
         Qt${MAJOR_QT_VERSION}::Concurrent
 
@@ -888,17 +886,6 @@ target_include_directories(${LIBRARY_PROJECT} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 # semver dependency https://github.com/Neargye/semver
 target_include_directories(${LIBRARY_PROJECT} PUBLIC ${CMAKE_SOURCE_DIR}/lib/semver/include)
-
-# miniaudio dependency https://github.com/mackron/miniaudio
-target_include_directories(${LIBRARY_PROJECT} PUBLIC ${CMAKE_SOURCE_DIR}/lib/miniaudio)
-
-if (UNIX)
-    if (CMAKE_DL_LIBS)
-        # libdl is a requirement for miniaudio on Linux
-        message(STATUS "Linking with CMake DL libs: '${CMAKE_DL_LIBS}'")
-        target_link_libraries(${LIBRARY_PROJECT} PUBLIC ${CMAKE_DL_LIBS})
-    endif ()
-endif ()
 
 if (WinToast_FOUND)
     target_link_libraries(${LIBRARY_PROJECT}

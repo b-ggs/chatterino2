@@ -13,7 +13,6 @@
 #ifdef CHATTERINO_HAVE_PLUGINS
 #    include "controllers/plugins/PluginController.hpp"
 #endif
-#include "controllers/sound/SoundController.hpp"
 #include "controllers/twitch/LiveController.hpp"
 #include "controllers/userdata/UserDataController.hpp"
 #include "debug/AssertInGuiThread.hpp"
@@ -50,7 +49,6 @@
 #include "widgets/splits/Split.hpp"
 #include "widgets/Window.hpp"
 
-#include <miniaudio.h>
 #include <QDesktopServices>
 
 #include <atomic>
@@ -88,7 +86,6 @@ Application::Application(Settings &_settings, Paths &_paths)
     , ffzBadges(&this->emplace<FfzBadges>())
     , seventvBadges(&this->emplace<SeventvBadges>())
     , userData(&this->emplace<UserDataController>())
-    , sound(&this->emplace<SoundController>())
     , twitchLiveController(&this->emplace<TwitchLiveController>())
 #ifdef CHATTERINO_HAVE_PLUGINS
     , plugins(&this->emplace<PluginController>())
